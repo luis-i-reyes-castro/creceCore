@@ -21,7 +21,7 @@ function calcularDatosCredito( $principal, $tasaAnualNominal, $plazoMeses)
 	
     $cuota               = round( $cuota, 2);
     $totalPagos          = round( $cuota * $plazoMeses, 2);
-    $totalIntereses      = $totalPagos - $principal;
+    $totalIntereses      = round( $totalPagos - $principal, 2);
 	$interesSobreCapital = round( 100.00 * $totalIntereses / $principal, 2);
 
 	$intereses 	= array(0.00);
@@ -35,11 +35,14 @@ function calcularDatosCredito( $principal, $tasaAnualNominal, $plazoMeses)
 	for( $k = 1; $k <= $plazoMeses; $k++)
 	{
         $intereses[$k] = round( $insolutos[$k-1] * $tasaMensual, 2);
-        $capitales[$k] = $cuota - $intereses[$k];
-        $insolutos[$k] = $insolutos[$k-1] - $capitales[$k];
-        if ( $insolutos[$k] < 0.00 ){ $insolutos[$k] = 0.00; }
+        $capitales[$k] = round( $cuota - $intereses[$k], 2);
+        $insolutos[$k] = round( $insolutos[$k-1] - $capitales[$k], 2);
+        if ( $insolutos[$k] < 0.00 )
+        {
+            $insolutos[$k] = 0.00;
+        }
         $comisiones[$k] = round( $insolutos[$k] * $tasaComision, 2);
-        $rentas[$k] 	= $cuota - $comisiones[$k];
+        $rentas[$k] 	= round( $cuota - $comisiones[$k], 2);
 	}
     $totalComisiones = array_sum($comisiones);
     $totalRentas     = array_sum($rentas);
@@ -90,34 +93,35 @@ function calcularDatosCredito( $principal, $tasaAnualNominal, $plazoMeses)
     // (ver: https://wiki.processmaker.com/3.1/Grid_Control#PHP_in_Grids)
     for( $k = 1; $k <= $plazoMeses; $k++)
     {
+        $indice    = strval($k);
         $interes_  = $intereses[$k];
         $capital_  = $capitales[$k];
         $insoluto_ = $insolutos[$k];
         $comision_ = $comisiones[$k];
         $renta_    = $rentas[$k];
         
-        $tablaSolicitantes['$k'] =
-        array( 'Periodo' => '$k',
-               'Pago'    => '$cuota',
-               'Interes' => '$interes_',
-               'Capital' => '$capital_',
-               'Insoluto' => '$insoluto_' );
+        $tablaSolicitantes[$indice] =
+        array( 'PERIODO' => $k,
+               'PAGO'    => $cuota,
+               'INTERES' => $interes_,
+               'CAPITAL' => $capital_,
+               'INSOLUTO' => $insoluto_ );
 
-        $tablaCrece['$k'] =
-        array( 'Periodo'  => '$k',
-               'Pago'     => '$cuota',
-               'Interes'  => '$interes_',
-               'Capital'  => '$capital_',
-               'Insoluto' => '$insoluto_',
-               'Comision' => '$comision_',
-               'Renta'    => '$renta_' );
+        $tablaCrece[$indice] =
+        array( 'PERIODO'  => $k,
+               'PAGO'     => $cuota,
+               'INTERES'  => $interes_,
+               'CAPITAL'  => $capital_,
+               'INSOLUTO' => $insoluto_,
+               'COMISION' => $comision_,
+               'RENTA'    => $renta_ );
 
-        $tablaInversionistas['$k'] =
-        array( 'Periodo'  => '$k',
-               'Pago'     => '$cuota',
-               'Insoluto' => '$insoluto_',
-               'Comision' => '$comision_',
-               'Renta'    => '$renta_' );
+        $tablaInversionistas[$indice] =
+        array( 'PERIODO'  => $k,
+               'PAGO'     => $cuota,
+               'INSOLUTO' => $insoluto_,
+               'COMISION' => $comision_,
+               'RENTA'    => $renta_ );
 
     }
 

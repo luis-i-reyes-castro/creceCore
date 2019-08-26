@@ -32,11 +32,12 @@ echo "\tGanancia: $ganancia\n";
 echo "\tGanancia Sobre Capital: $gananciaSobreCapital\n";
 echo "\tTasa Interna de Retorno: $tasaInternaRetorno\n";
 
-$tablaSolicitantes   = $datos['TablaSolicitantes'];
-$tablaCrece          = $datos['TablaCrece'];
-$tablaInversionistas = $datos['TablaInversionistas'];
-echo "Tabla Solicitantes: \n$tablaSolicitantes\n";
-echo "Tabla Crece: \n$tablaCrece\n";
-echo "Tabla Inversionistas: \n$tablaInversionistas\n";
+$tablaSolicitantes   = $datos['TablaSolicitantes']['1']['PAGO'];
+$tablaCrece          = $datos['TablaCrece']['1']['COMISION'];
+$tablaInversionistas = $datos['TablaInversionistas']['1']['RENTA'];
+
+echo "Tabla Solicitantes (1,PAGO): \n$tablaSolicitantes\n";
+echo "Tabla Crece (1,COMISION): \n$tablaCrece\n";
+echo "Tabla Inversionistas (1,RENTA): \n$tablaInversionistas\n";
 
 ?>
