@@ -20,7 +20,7 @@ function calcularDatosCredito( $principal, $tasaAnualNominal, $plazoMeses)
 	$cuota 	= ( $principal * $tasaMensual * $eta ) / ( $eta - 1.00 );
 	
     $cuota               = round( $cuota, 2);
-    $totalPagos          = $cuota * $plazoMeses;
+    $totalPagos          = round( $cuota * $plazoMeses, 2);
     $totalIntereses      = $totalPagos - $principal;
 	$interesSobreCapital = round( 100.00 * $totalIntereses / $principal, 2);
 
@@ -34,11 +34,12 @@ function calcularDatosCredito( $principal, $tasaAnualNominal, $plazoMeses)
 	require 'tasaComision.php';
 	for( $k = 1; $k <= $plazoMeses; $k++)
 	{
-		$intereses[$k] 	= round( $insolutos[$k-1] * $tasaMensual, 2);
-		$capitales[$k] 	= $cuota - $intereses[$k];
-		$insolutos[$k] 	= $insolutos[$k-1] - $capitales[$k];
-		$comisiones[$k] = round( $insolutos[$k] * $tasaComision, 2);
-		$rentas[$k] 	= $cuota - $comisiones[$k];
+        $intereses[$k] = round( $insolutos[$k-1] * $tasaMensual, 2);
+        $capitales[$k] = $cuota - $intereses[$k];
+        $insolutos[$k] = $insolutos[$k-1] - $capitales[$k];
+        if ( $insolutos[$k] < 0.00 ){ $insolutos[$k] = 0.00; }
+        $comisiones[$k] = round( $insolutos[$k] * $tasaComision, 2);
+        $rentas[$k] 	= $cuota - $comisiones[$k];
 	}
     $totalComisiones = array_sum($comisiones);
     $totalRentas     = array_sum($rentas);
