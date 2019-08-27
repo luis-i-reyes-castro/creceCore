@@ -11,6 +11,7 @@ function evaluarTasaInternaRetorno( $rentas, $tasaMensual)
 
 function calcularDatosCredito( $principal, $tasaAnualNominal, $plazoMeses)
 {
+    require "constantes.php";
     
     $tasaMensual = $tasaAnualNominal / 12.00 / 100.00;
 
@@ -24,14 +25,13 @@ function calcularDatosCredito( $principal, $tasaAnualNominal, $plazoMeses)
     $totalIntereses      = round( $totalPagos - $principal, 2);
     $interesSobreCapital = round( 100.00 * $totalIntereses / $principal, 2);
 
-    $intereses     = array(0.00);
-    $capitales     = array(0.00);
-    $insolutos    = array($principal);
+    $intereses  = array(0.00);
+    $capitales  = array(0.00);
+    $insolutos  = array($principal);
     $comisiones = array(0.00);
-    $rentas        = array(0.00);
+    $rentas     = array(0.00);
 
     // Calcula recursivamente los pagos, las comisiones y las rentas
-    require 'tasaComision.php';
     for( $k = 1; $k <= $plazoMeses; $k++)
     {
         $intereses[$k] = round( $insolutos[$k-1] * $tasaMensual, 2);
@@ -51,7 +51,6 @@ function calcularDatosCredito( $principal, $tasaAnualNominal, $plazoMeses)
 
     // Calcula la Tasa Interna de Retorno (TIR) mensual mediante biseccion
     // usando la tasa mensual nominal como acota superior
-    require "precisionMetodoBiseccion.php";
     $t_min = 0.00;
     $t_max = $tasaMensual;
     while ( $t_max - $t_min > $precisionMetodoBiseccion )
