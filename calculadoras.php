@@ -102,27 +102,24 @@ function calcularDatosCredito( $principal, $tasaAnualNominal, $plazoMeses)
         $renta_    = $rentas[$k];
         
         $tablaSolicitantes[$indice] =
-        array( 'PERIODO' => $k,
-               'PAGO'    => $cuota,
-               'INTERES' => $interes_,
-               'CAPITAL' => $capital_,
-               'INSOLUTO' => $insoluto_ );
+        array( 'PAGO'     => '$' . number_format( $cuota, 2),
+               'INTERES'  => '$' . number_format( $interes_, 2),
+               'CAPITAL'  => '$' . number_format( $capital_, 2),
+               'INSOLUTO' => '$' . number_format( $insoluto_, 2) );
 
         $tablaCrece[$indice] =
-        array( 'PERIODO'  => $k,
-               'PAGO'     => $cuota,
-               'INTERES'  => $interes_,
-               'CAPITAL'  => $capital_,
-               'INSOLUTO' => $insoluto_,
-               'COMISION' => $comision_,
-               'RENTA'    => $renta_ );
+        array( 'PAGO'     => '$' . number_format( $cuota, 2),
+               'INTERES'  => '$' . number_format( $interes_, 2),
+               'CAPITAL'  => '$' . number_format( $capital_, 2),
+               'INSOLUTO' => '$' . number_format( $insoluto_, 2),
+               'COMISION' => '$' . number_format( $comision_, 2),
+               'RENTA'    => '$' . number_format( $renta_, 2) );
 
         $tablaInversionistas[$indice] =
-        array( 'PERIODO'  => $k,
-               'PAGO'     => $cuota,
-               'INSOLUTO' => $insoluto_,
-               'COMISION' => $comision_,
-               'RENTA'    => $renta_ );
+        array( 'PAGO'     => '$' . number_format( $cuota, 2),
+               'INSOLUTO' => '$' . number_format( $insoluto_, 2),
+               'COMISION' => '$' . number_format( $comision_, 2),
+               'RENTA'    => '$' . number_format( $renta_, 2) );
 
     }
 
