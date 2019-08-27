@@ -13,12 +13,14 @@ function calcularDatosCredito( $principal, $tasaAnualNominal, $plazoMeses)
 {
     require "constantes.php";
     
-    $tasaMensual = $tasaAnualNominal / 12.00 / 100.00;
+    // Calcula la tasa diaria y la compone para obtener la tasa mensual
+    $tasaDiaria  = $tasaAnualNominal / 365.00 / 100.00;
+    $tasaMensual = ( ( 1.00 + $tasaDiaria ) ** 30 ) - 1.00;
 
     // Calcula la cuota mensual usado la formula para EMI
     // (ver: https://en.wikipedia.org/wiki/Equated_monthly_installment)
-    $eta     = ( 1.00 + $tasaMensual ) ** $plazoMeses;
-    $cuota     = ( $principal * $tasaMensual * $eta ) / ( $eta - 1.00 );
+    $eta   = ( 1.00 + $tasaMensual ) ** $plazoMeses;
+    $cuota = ( $principal * $tasaMensual * $eta ) / ( $eta - 1.00 );
     
     $cuota               = round( $cuota, 2);
     $totalPagos          = round( $cuota * $plazoMeses, 2);
