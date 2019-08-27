@@ -36,18 +36,21 @@ function calcularDatosCredito( $principal, $tasaAnualNominal, $plazoMeses)
     // Calcula recursivamente los pagos, las comisiones y las rentas
     for( $k = 1; $k <= $plazoMeses; $k++)
     {
-        $intereses[$k] = round( $insolutos[$k-1] * $tasaMensual, 2);
-        $capitales[$k] = round( $cuota - $intereses[$k], 2);
-        $insolutos[$k] = round( $insolutos[$k-1] - $capitales[$k], 2);
-        if ( $insolutos[$k] < 0.00 )
-        {
-            $insolutos[$k] = 0.00;
-        }
+        $intereses[$k]  = round( $insolutos[$k-1] * $tasaMensual, 2);
+        $capitales[$k]  = round( $cuota - $intereses[$k], 2);
+        $insolutos[$k]  = round( $insolutos[$k-1] - $capitales[$k], 2);
         $comisiones[$k] = round( $insolutos[$k] * $tasaComision, 2);
         $rentas[$k]     = round( $cuota - $comisiones[$k], 2);
     }
-    $totalComisiones = array_sum($comisiones);
-    $totalRentas     = array_sum($rentas);
+    // Corrije la ultima fila de las tablas
+    $k              = $plazoMeses;
+    $insolutos[$k]  = 0.00;
+    $comisiones[$k] = 0.00;
+    $rentas[$k]     = $cuota;
+
+    // Calcula la suma de las comisiones y rentas
+    $totalComisiones      = array_sum($comisiones);
+    $totalRentas          = array_sum($rentas);
     $ganancia             = $totalRentas - $principal;
     $gananciaSobreCapital = round( 100.00 * $ganancia / $principal, 2);
 
