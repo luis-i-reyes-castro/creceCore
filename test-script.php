@@ -20,10 +20,10 @@ $adjudicacion_iva     = $datos['AdjudicacionIVA'];
 $totalInversion       = $datos['TotalInversion'];
 $totalComisiones      = $datos['TotalComisiones'];
 $totalComisionesIVA   = $datos['TotalComisionesIVA'];
-$totalRentas          = $datos['TotalRentas'];
-$ganancia             = $datos['Ganancia'];
-$gananciaSobreCapital = $datos['GananciaSobreCapital'];
-$tasaInternaRetorno   = $datos['TasaInternaRetorno'];
+$totalRentas            = $datos['TotalRentas'];
+$ganancia               = $datos['Ganancia'];
+$gananciaSobreInversion = $datos['GananciaSobreInversion'];
+$tasaInternaRetorno     = $datos['TasaInternaRetorno'];
 
 echo "DATOS DEL CREDITO:\n";
 echo "\tCuota: $cuota\n";
@@ -37,7 +37,7 @@ echo "\tTotal Comisiones: $totalComisiones\n";
 echo "\tTotal Comisiones (IVA): $totalComisionesIVA\n";
 echo "\tTotal Rentas: $totalRentas\n";
 echo "\tGanancia: $ganancia\n";
-echo "\tGanancia Sobre Capital: $gananciaSobreCapital\n";
+echo "\tGanancia Sobre Inversion: $gananciaSobreInversion\n";
 echo "\tTasa Interna de Retorno: $tasaInternaRetorno\n";
 
 $tablaSolicitantes   = $datos['TablaSolicitantes']['1']['PAGO'];

@@ -60,11 +60,12 @@ function calcularDatosCredito( $principal, $tasaAnual, $plazoMeses)
     $rentas[$k]         = $cuota;
 
     // Calcula la suma de las comisiones y rentas
-    $totalComisiones      = round( array_sum($comisiones), 2);
-    $totalComisionesIVA   = round( array_sum($comisiones_iva), 2);
-    $totalRentas          = round( array_sum($rentas), 2);
-    $ganancia             = round( $totalRentas - $principal, 2);
-    $gananciaSobreCapital = round( 100. * $ganancia / $principal, 2);
+    $totalComisiones    = round( array_sum($comisiones), 2);
+    $totalComisionesIVA = round( array_sum($comisiones_iva), 2);
+    $totalRentas        = round( array_sum($rentas), 2);
+    $ganancia           = round( $totalRentas - $totalInversion, 2);
+    $gananciaSobreInversion =
+    round( 100. * $ganancia / $totalInversion, 2);
 
     // Calcula la Tasa Interna de Retorno (TIR) mensual mediante biseccion
     // usando la tasa mensual nominal como acota superior
@@ -91,22 +92,22 @@ function calcularDatosCredito( $principal, $tasaAnual, $plazoMeses)
 
     // Almacena todos los datos en una sola variable tipo arreglo
     $datosCredito = array();
-    $datosCredito['Cuota']                = $cuota;
-    $datosCredito['TotalPagos']           = $totalPagos;
-    $datosCredito['TotalIntereses']       = $totalIntereses;
-    $datosCredito['InteresSobreCapital']  = $interesSobreCapital;
-    $datosCredito['Adjudicacion']         = $adjudicacion;
-    $datosCredito['AdjudicacionIVA']      = $adjudicacion_iva;
-    $datosCredito['TotalInversion']       = $totalInversion;
-    $datosCredito['TotalComisiones']      = $totalComisiones;
-    $datosCredito['TotalComisionesIVA']   = $totalComisionesIVA;
-    $datosCredito['TotalRentas']          = $totalRentas;
-    $datosCredito['Ganancia']             = $ganancia;
-    $datosCredito['GananciaSobreCapital'] = $gananciaSobreCapital;
-    $datosCredito['TasaInternaRetorno']   = $tasaInternaRetorno;
-    $tablaSolicitantes                    = array();
-    $tablaCrece                           = array();
-    $tablaInversionistas                  = array();
+    $datosCredito['Cuota']                  = $cuota;
+    $datosCredito['TotalPagos']             = $totalPagos;
+    $datosCredito['TotalIntereses']         = $totalIntereses;
+    $datosCredito['InteresSobreCapital']    = $interesSobreCapital;
+    $datosCredito['Adjudicacion']           = $adjudicacion;
+    $datosCredito['AdjudicacionIVA']        = $adjudicacion_iva;
+    $datosCredito['TotalInversion']         = $totalInversion;
+    $datosCredito['TotalComisiones']        = $totalComisiones;
+    $datosCredito['TotalComisionesIVA']     = $totalComisionesIVA;
+    $datosCredito['TotalRentas']            = $totalRentas;
+    $datosCredito['Ganancia']               = $ganancia;
+    $datosCredito['GananciaSobreInversion'] = $gananciaSobreInversion;
+    $datosCredito['TasaInternaRetorno']     = $tasaInternaRetorno;
+    $tablaSolicitantes   = array();
+    $tablaCrece          = array();
+    $tablaInversionistas = array();
     
     // Almacena las tablas de pagos como variables tipo grid
     // (ver: https://wiki.processmaker.com/3.1/Grid_Control#PHP_in_Grids)
