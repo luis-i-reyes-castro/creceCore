@@ -2,9 +2,9 @@
 
 require 'calculadoras.php';
 
-$principal = 4000.00;
-$tasaAnual = 14.00;
-$plazo     = 18;
+$principal = 1000;
+$tasaAnual = 12.00;
+$plazo     = 12;
 
 echo "PRINCIPAL: $principal\n";
 echo "TASA ANUAL NOMINAL: $tasaAnual\n";
@@ -15,7 +15,11 @@ $cuota                = $datos['Cuota'];
 $totalPagos           = $datos['TotalPagos'];
 $totalIntereses       = $datos['TotalIntereses'] ;
 $interesSobreCapital  = $datos['InteresSobreCapital'];
+$adjudicacion         = $datos['Adjudicacion'];
+$adjudicacion_iva     = $datos['AdjudicacionIVA'];
+$totalInversion       = $datos['TotalInversion'];
 $totalComisiones      = $datos['TotalComisiones'];
+$totalComisionesIVA   = $datos['TotalComisionesIVA'];
 $totalRentas          = $datos['TotalRentas'];
 $ganancia             = $datos['Ganancia'];
 $gananciaSobreCapital = $datos['GananciaSobreCapital'];
@@ -26,7 +30,11 @@ echo "\tCuota: $cuota\n";
 echo "\tTotal Pagos: $totalPagos\n";
 echo "\tTotal Intereses: $totalIntereses\n";
 echo "\tInteres Sobre Capital: $interesSobreCapital\n";
+echo "\tAdjudicacion: $adjudicacion\n";
+echo "\tAdjudicacion (IVA): $adjudicacion_iva\n";
+echo "\tTotal Inversion: $totalInversion\n";
 echo "\tTotal Comisiones: $totalComisiones\n";
+echo "\tTotal Comisiones (IVA): $totalComisionesIVA\n";
 echo "\tTotal Rentas: $totalRentas\n";
 echo "\tGanancia: $ganancia\n";
 echo "\tGanancia Sobre Capital: $gananciaSobreCapital\n";
