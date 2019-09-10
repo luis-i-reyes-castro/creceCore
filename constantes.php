@@ -1,4 +1,10 @@
 <?php
+// Constantes relacionadas con los costos de evaluacion
+$montoEvaluacion12     = 2500.;
+$montoEvaluacion23     = 5000.;
+$constCostoEvaluacion1 = 0.10;
+$constCostoEvaluacion2 = 250.;
+$constCostoEvaluacion3 = 0.05;
 // Tasa de adjudicacion
 $tasaAdjudicacion = 0.80 / 100.00;
 // Tasa de comision mensual
