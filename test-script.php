@@ -22,10 +22,12 @@ $totalIntereses         = $datos['str_TotalIntereses'] ;
 $interesSobreCapital    = $datos['str_InteresSobreCapital'];
 $totalComisiones        = $datos['str_TotalComisiones'];
 $totalComisionesIVA     = $datos['str_TotalComisionesIVA'];
-$totalRentas            = $datos['str_TotalRentas'];
-$ganancia               = $datos['str_Ganancia'];
-$gananciaSobreInversion = $datos['str_GananciaSobreInversion'];
+$totalGanancias         = $datos['str_TotalGanancias'];
+$utilidad               = $datos['str_Utilidad'];
+$utilidadSobreInversion = $datos['str_UtilidadSobreInversion'];
 $tasaInternaRetorno     = $datos['str_TasaInternaRetorno'];
+$operacionUtilidad      = $datos['str_OperacionUtilidad'];
+$operacionIVA           = $datos['str_OperacionIVA'];
 $tablaCrece             = $datos['TablaCrece'];
 
 echo "DATOS DEL CREDITO:\n";
@@ -44,12 +46,14 @@ echo "\tTotal Intereses: $totalIntereses\n";
 echo "\tInteres Sobre Capital: $interesSobreCapital\n";
 echo "\tTotal Comisiones: $totalComisiones\n";
 echo "\tTotal Comisiones (IVA): $totalComisionesIVA\n";
-echo "\tTotal Rentas: $totalRentas\n";
-echo "\tGanancia: $ganancia\n";
-echo "\tGanancia Sobre Inversion: $gananciaSobreInversion\n";
+echo "\tTotal Ganancias: $totalGanancias\n";
+echo "\tUtilidad: $utilidad\n";
+echo "\tUtilidad Sobre Inversion: $utilidadSobreInversion\n";
 echo "\tTasa Interna de Retorno: $tasaInternaRetorno\n";
+echo "\tUtilidad de la Operacion: $operacionUtilidad\n";
+echo "\tIVA de la Operacion: $operacionIVA\n";
 
-echo "TABLA DE PAGOS, COMISIONES Y RENTAS:\n";
+echo "TABLA DE PAGOS, COMISIONES Y GANANCIAS:\n";
 foreach ( $tablaCrece as $indice => $fila )
 {
     $pago         = $fila['PAGO'];
@@ -58,7 +62,7 @@ foreach ( $tablaCrece as $indice => $fila )
     $insoluto     = $fila['INSOLUTO'];
     $comision     = $fila['COMISION'];
     $comision_iva = $fila['COMISION_IVA'];
-    $renta        = $fila['RENTA'];
+    $ganancia     = $fila['GANANCIA'];
 
     echo "\tMES $indice:\n";
     echo "\t\tPago: $pago\n";
@@ -67,7 +71,7 @@ foreach ( $tablaCrece as $indice => $fila )
     echo "\t\tInsoluto: $insoluto\n";
     echo "\t\tComision: $comision\n";
     echo "\t\tComision (IVA): $comision_iva\n";
-    echo "\t\tRenta: $renta\n";
+    echo "\t\tGanancia: $ganancia\n";
 
 }
 

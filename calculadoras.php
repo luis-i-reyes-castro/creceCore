@@ -19,11 +19,12 @@ function calcularCostoEvaluacion( $principal)
     return $costoEvaluacion;
 }
 
-function calcularValorPresente( $rentas, $tasaMensual)
+function calcularValorPresente( $flujosDeEfectivo, $tasaMensual)
 {
     $valor = 0.00;
-    foreach ( $rentas as $k => $renta ) {
-        $valor += $renta / ( ( 1.00 + $tasaMensual ) ** $k );
+    foreach ( $flujosDeEfectivo as $k => $flujo )
+    {
+        $valor += $flujo / ( ( 1.00 + $tasaMensual ) ** $k );
     }
     return $valor;
 }
@@ -61,7 +62,7 @@ function calcularDatosCredito( $principal, $tasaAnual, $plazoMeses)
     $insolutos = array($principal);
     $comisiones     = array(0.);
     $comisiones_iva = array(0.);
-    $rentas         = array(0.);
+    $ganancias      = array(0.);
 
     // Calcula recursivamente los pagos, las comisiones y las rentas
     for( $k = 1; $k < $plazoMeses; $k++)
@@ -72,7 +73,7 @@ function calcularDatosCredito( $principal, $tasaAnual, $plazoMeses)
         $insolutos[$k]  = round( $insolutos[$k-1] - $capitales[$k], 2);
         $comisiones[$k]     = round( $insolutos[$k-1] * $tasaComision, 2);
         $comisiones_iva[$k] = round( $comisiones[$k] * $tasaIVA, 2);
-        $rentas[$k]         = round( $pagos[$k] - $comisiones[$k] - $comisiones_iva[$k], 2);
+        $ganancias[$k]      = round( $pagos[$k] - $comisiones[$k] - $comisiones_iva[$k], 2);
     }
     // Calcula la ultima fila de las tablas
     $k                  = $plazoMeses;
@@ -82,7 +83,7 @@ function calcularDatosCredito( $principal, $tasaAnual, $plazoMeses)
     $insolutos[$k]      = 0.;
     $comisiones[$k]     = round( $insolutos[$k-1] * $tasaComision, 2);
     $comisiones_iva[$k] = round( $comisiones[$k] * $tasaIVA, 2);
-    $rentas[$k]         = round( $pagos[$k] - $comisiones[$k] - $comisiones_iva[$k], 2);
+    $ganancias[$k]      = round( $pagos[$k] - $comisiones[$k] - $comisiones_iva[$k], 2);
 
     // Calcula la suma de las comisiones y rentas
     $totalPagos          = round( array_sum($pagos), 2);
@@ -90,9 +91,9 @@ function calcularDatosCredito( $principal, $tasaAnual, $plazoMeses)
     $interesSobreCapital = round( 100. * $totalIntereses / $principal, 2);
     $totalComisiones     = round( array_sum($comisiones), 2);
     $totalComisionesIVA  = round( array_sum($comisiones_iva), 2);
-    $totalRentas         = round( array_sum($rentas), 2);
-    $ganancia            = round( $totalRentas - $totalInversion, 2);
-    $gananciaSobreInversion = round( 100. * $ganancia / $totalInversion, 2);
+    $totalGanancias      = round( array_sum($ganancias), 2);
+    $utilidad            = round( $totalGanancias - $totalInversion, 2);
+    $utilidadSobreInversion = round( 100. * $utilidad / $totalInversion, 2);
 
     // Calcula la Tasa Interna de Retorno (TIR) mensual mediante biseccion
     // usando la tasa mensual nominal como acota superior
@@ -101,7 +102,7 @@ function calcularDatosCredito( $principal, $tasaAnual, $plazoMeses)
     while ( $t_max - $t_min > $precisionMetodoBiseccion )
     {
         $t_med = ( $t_max + $t_min ) / 2.;
-        $valor_presente = calcularValorPresente( $rentas, $t_med);
+        $valor_presente = calcularValorPresente( $ganancias, $t_med);
         if ( $valor_presente < $totalInversion )
         {
             $t_max = $t_med;
@@ -115,7 +116,16 @@ function calcularDatosCredito( $principal, $tasaAnual, $plazoMeses)
             break;
         }
     }
+    // Compone la TIR mensual para obtener la TIR anual
     $tasaInternaRetorno = round( ( ( ( 1. + $t_med ) ** 12 ) - 1. ) * 100., 2);
+
+    // Calcula las utilidades e IVAs de la operacion
+    $operacionUtilidad = $costoEvaluacion
+                       + $costoAdjudicacion
+                       + $totalComisiones;
+    $operacionIVA      = $costoEvaluacionIVA
+                       + $costoAdjudicacionIVA
+                       + $totalComisionesIVA;
 
     // Almacena todos los datos en una sola variable tipo arreglo
     $datosCredito = array();
@@ -134,10 +144,12 @@ function calcularDatosCredito( $principal, $tasaAnual, $plazoMeses)
     $datosCredito['InteresSobreCapital']    = $interesSobreCapital;
     $datosCredito['TotalComisiones']        = $totalComisiones;
     $datosCredito['TotalComisionesIVA']     = $totalComisionesIVA;
-    $datosCredito['TotalRentas']            = $totalRentas;
-    $datosCredito['Ganancia']               = $ganancia;
-    $datosCredito['GananciaSobreInversion'] = $gananciaSobreInversion;
+    $datosCredito['TotalGanancias']         = $totalGanancias;
+    $datosCredito['Utilidad']               = $utilidad;
+    $datosCredito['UtilidadSobreInversion'] = $utilidadSobreInversion;
     $datosCredito['TasaInternaRetorno']     = $tasaInternaRetorno;
+    $datosCredito['OperacionUtilidad']      = $operacionUtilidad;
+    $datosCredito['OperacionIVA']           = $operacionIVA;
     
     // Hace copias de los datos anteriores formateadas como strings
 
@@ -156,10 +168,12 @@ function calcularDatosCredito( $principal, $tasaAnual, $plazoMeses)
     $datosCredito['str_InteresSobreCapital']    =       number_format( $interesSobreCapital, 2) . '%';
     $datosCredito['str_TotalComisiones']        = '$' . number_format( $totalComisiones, 2);
     $datosCredito['str_TotalComisionesIVA']     = '$' . number_format( $totalComisionesIVA, 2);
-    $datosCredito['str_TotalRentas']            = '$' . number_format( $totalRentas, 2);
-    $datosCredito['str_Ganancia']               = '$' . number_format( $ganancia, 2);
-    $datosCredito['str_GananciaSobreInversion'] =       number_format( $gananciaSobreInversion, 2) . '%';
+    $datosCredito['str_TotalGanancias']         = '$' . number_format( $totalGanancias, 2);
+    $datosCredito['str_Utilidad']               = '$' . number_format( $utilidad, 2);
+    $datosCredito['str_UtilidadSobreInversion'] =       number_format( $utilidadSobreInversion, 2) . '%';
     $datosCredito['str_TasaInternaRetorno']     =       number_format( $tasaInternaRetorno, 2) . '%';
+    $datosCredito['str_OperacionUtilidad']      = '$' . number_format( $operacionUtilidad, 2);
+    $datosCredito['str_OperacionIVA']           = '$' . number_format( $operacionIVA, 2);
     
     // Almacena las tablas de pagos como variables tipo grid
     // (ver: https://wiki.processmaker.com/3.1/Grid_Control#PHP_in_Grids)
@@ -175,7 +189,7 @@ function calcularDatosCredito( $principal, $tasaAnual, $plazoMeses)
         $insoluto_ = $insolutos[$k];
         $comision_     = $comisiones[$k];
         $comision_iva_ = $comisiones_iva[$k];
-        $renta_        = $rentas[$k];
+        $ganancia_     = $ganancias[$k];
         
         $tablaSolicitantes[$indice] =
         array( 'PAGO'     => '$' . number_format( $pago_, 2),
@@ -188,7 +202,7 @@ function calcularDatosCredito( $principal, $tasaAnual, $plazoMeses)
                'INSOLUTO' => '$' . number_format( $insoluto_, 2),
                'COMISION'     => '$' . number_format( $comision_, 2),
                'COMISION_IVA' => '$' . number_format( $comision_iva_, 2),
-               'RENTA'        => '$' . number_format( $renta_, 2) );
+               'GANANCIA'     => '$' . number_format( $ganancia_, 2) );
 
         $tablaCrece[$indice] =
         array( 'PAGO'     => '$' . number_format( $pago_, 2),
@@ -197,7 +211,7 @@ function calcularDatosCredito( $principal, $tasaAnual, $plazoMeses)
                'INSOLUTO' => '$' . number_format( $insoluto_, 2),
                'COMISION'     => '$' . number_format( $comision_, 2),
                'COMISION_IVA' => '$' . number_format( $comision_iva_, 2),
-               'RENTA'        => '$' . number_format( $renta_, 2) );
+               'GANANCIA'     => '$' . number_format( $ganancia_, 2) );
 
     }
 
