@@ -155,7 +155,7 @@ function calcularDatosCredito( $principal, $tasaAnual, $plazoMeses)
 
     $datosCredito['str_Principal']              = '$' . number_format( $principal, 2);
     $datosCredito['str_TasaAnual']              =       number_format( $tasaAnual, 2) . '%';
-    $datosCredito['str_PlazoMeses']             =       number_format( $plazoMeses, 0);
+    $datosCredito['str_PlazoMeses']             =       number_format( $plazoMeses, 0) . ' meses';
     $datosCredito['str_CostoEvaluacion']        = '$' . number_format( $costoEvaluacion, 2);
     $datosCredito['str_CostoEvaluacionIVA']     = '$' . number_format( $costoEvaluacionIVA, 2);
     $datosCredito['str_PrincipalEfectivo']      = '$' . number_format( $principalEfectivo, 2);
