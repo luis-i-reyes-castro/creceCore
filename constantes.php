@@ -1,4 +1,11 @@
 <?php
+// Principales, plazos y tasas min/max
+$principalMin  = 1000.00;
+$principalMax  = 9000.00;
+$plazoMesesMin = 3;
+$plazoMesesMax = 18;
+$tasaAnualMin  = 14.00;
+$tasaAnualMax  = 28.00;
 // Constantes relacionadas con los costos de evaluacion
 $montoEvaluacion12     = 2500.;
 $montoEvaluacion23     = 5000.;
@@ -13,4 +20,7 @@ $tasaComision     = 0.45 / 100.00;
 $tasaIVA          = 12.0 / 100.00;
 // Precision del metodo de biseccion utilizado para calcular la TIR
 $precisionMetodoBiseccion = 1E-6;
+// Constantes relacionadas con factoring
+$factoringDiasMin = 14;
+$factoringDiasMax = 120;
 ?>
