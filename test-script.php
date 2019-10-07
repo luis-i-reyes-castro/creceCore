@@ -2,7 +2,7 @@
 
 require 'calculadoras.php';
 
-$principal = 8000;
+$principal = 4000;
 $tasaAnual = 19.00;
 $plazo     = 12;
 
@@ -12,9 +12,11 @@ $tasaAnual              = $datos['str_TasaAnual'];
 $plazoMeses             = $datos['str_PlazoMeses'];
 $costoEvaluacion        = $datos['str_CostoEvaluacion'];
 $costoEvaluacionIVA     = $datos['str_CostoEvaluacionIVA'];
+$costoEvaluacionTotal   = $datos['str_CostoEvaluacionTotal'];
 $principalEfectivo      = $datos['str_PrincipalEfectivo'];
 $costoAdjudicacion      = $datos['str_CostoAdjudicacion'];
 $costoAdjudicacionIVA   = $datos['str_CostoAdjudicacionIVA'];
+$costoAdjudicacionTotal = $datos['str_CostoAdjudicacionTotal'];
 $totalInversion         = $datos['str_TotalInversion'];
 $cuota                  = $datos['str_Cuota'];
 $totalPagos             = $datos['str_TotalPagos'];
@@ -36,9 +38,11 @@ echo "\tTASA ANUAL NOMINAL: $tasaAnual\n";
 echo "\tPLAZO: $plazoMeses\n";
 echo "\tCosto Evaluacion: $costoEvaluacion\n";
 echo "\tCosto Evaluacion (IVA): $costoEvaluacionIVA\n";
+echo "\tCosto Evaluacion (total): $costoEvaluacionTotal\n";
 echo "\tPrincipal Efectivo: $principalEfectivo\n";
 echo "\tCosto Adjudicacion: $costoAdjudicacion\n";
 echo "\tCosto Adjudicacion (IVA): $costoAdjudicacionIVA\n";
+echo "\tCosto Adjudicacion (total): $costoAdjudicacionTotal\n";
 echo "\tTotal Inversion: $totalInversion\n";
 echo "\tCuota: $cuota\n";
 echo "\tTotal Pagos: $totalPagos\n";

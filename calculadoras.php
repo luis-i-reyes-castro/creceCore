@@ -39,12 +39,14 @@ function calcularDatosCredito( $principal, $tasaAnual, $plazoMeses)
     // Calcula el costo de evaluacion (lo paga el solicitante)
     $costoEvaluacion    = calcularCostoEvaluacion($principal);
     $costoEvaluacionIVA = round( $costoEvaluacion * $tasaIVA, 2);
-    $principalEfectivo  = $principal - $costoEvaluacion - $costoEvaluacionIVA;
+    $costoEvaluacionTotal = $costoEvaluacion + $costoEvaluacionIVA;
+    $principalEfectivo    = $principal - $costoEvaluacionTotal;
 
     // Calcula el costo de adjudicacion (lo paga el inversionista)
     $costoAdjudicacion     = round( $principal * $tasaAdjudicacion, 2);
     $costoAdjudicacionIVA  = round( $costoAdjudicacion * $tasaIVA, 2);
-    $totalInversion        = $principal + $costoAdjudicacion + $costoAdjudicacionIVA;
+    $costoAdjudicacionTotal = $costoAdjudicacion + $costoAdjudicacionIVA;
+    $totalInversion         = $principal + $costoAdjudicacionTotal;
     
     // Calcula la tasa diaria y la compone para obtener la tasa mensual
     $tasaDiaria  = $tasaAnual / 360. / 100.;
@@ -134,9 +136,11 @@ function calcularDatosCredito( $principal, $tasaAnual, $plazoMeses)
     $datosCredito['PlazoMeses']             = $plazoMeses;
     $datosCredito['CostoEvaluacion']        = $costoEvaluacion;
     $datosCredito['CostoEvaluacionIVA']     = $costoEvaluacionIVA;
+    $datosCredito['costoEvaluacionTotal']   = $costoEvaluacionTotal;
     $datosCredito['PrincipalEfectivo']      = $principalEfectivo;
     $datosCredito['CostoAdjudicacion']      = $costoAdjudicacion;
     $datosCredito['CostoAdjudicacionIVA']   = $costoAdjudicacionIVA;
+    $datosCredito['costoAdjudicacionTotal'] = $costoAdjudicacionTotal;
     $datosCredito['TotalInversion']         = $totalInversion;
     $datosCredito['Cuota']                  = $cuota;
     $datosCredito['TotalPagos']             = $totalPagos;
@@ -158,9 +162,11 @@ function calcularDatosCredito( $principal, $tasaAnual, $plazoMeses)
     $datosCredito['str_PlazoMeses']             =       number_format( $plazoMeses, 0) . ' meses';
     $datosCredito['str_CostoEvaluacion']        = '$' . number_format( $costoEvaluacion, 2);
     $datosCredito['str_CostoEvaluacionIVA']     = '$' . number_format( $costoEvaluacionIVA, 2);
+    $datosCredito['str_CostoEvaluacionTotal']   = '$' . number_format( $costoEvaluacionTotal, 2);
     $datosCredito['str_PrincipalEfectivo']      = '$' . number_format( $principalEfectivo, 2);
     $datosCredito['str_CostoAdjudicacion']      = '$' . number_format( $costoAdjudicacion, 2);
     $datosCredito['str_CostoAdjudicacionIVA']   = '$' . number_format( $costoAdjudicacionIVA, 2);
+    $datosCredito['str_CostoAdjudicacionTotal'] = '$' . number_format( $costoAdjudicacionTotal, 2);
     $datosCredito['str_TotalInversion']         = '$' . number_format( $totalInversion, 2);
     $datosCredito['str_Cuota']                  = '$' . number_format( $cuota, 2);
     $datosCredito['str_TotalPagos']             = '$' . number_format( $totalPagos, 2);
