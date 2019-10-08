@@ -41,22 +41,22 @@ function crearCopiaFormateada( $tabla, $especificaciones)
     return $nuevaTabla;
 }
 
-// Para desarrollo/depuracion
-$tabla = array(
-         '1' => array( 'Name'=>'John Doe',
-                       'Salary'=>22525.99,
-                       'HireDate'=>'2012-12-31'),
-         '2' => array( 'Name'=>'Jane Roe',
-                       'Salary'=>40000.00,
-                       'HireDate'=>'1997-06-01'),
-         '3' => array( 'Name'=>'Jill Hill',
-                       'Salary'=>33600.10,
-                       'HireDate'=>'2008-01-25')
-         );
-$especificaciones = array( 'Name' => '',
-                           'Salary' => '$');
+// // Para desarrollo/depuracion
+// $tabla = array(
+//          '1' => array( 'Name'=>'John Doe',
+//                        'Salary'=>22525.99,
+//                        'HireDate'=>'2012-12-31'),
+//          '2' => array( 'Name'=>'Jane Roe',
+//                        'Salary'=>40000.00,
+//                        'HireDate'=>'1997-06-01'),
+//          '3' => array( 'Name'=>'Jill Hill',
+//                        'Salary'=>33600.10,
+//                        'HireDate'=>'2008-01-25')
+//          );
+// $especificaciones = array( 'Name' => '',
+//                            'Salary' => '$');
 
-$nuevaTabla = crearCopiaFormateada( $tabla, $especificaciones);
-print_r($nuevaTabla);
+// $nuevaTabla = crearCopiaFormateada( $tabla, $especificaciones);
+// print_r($nuevaTabla);
 
 ?>
