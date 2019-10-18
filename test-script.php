@@ -1,6 +1,6 @@
 <?php
 
-require 'calculadoras.php';
+require 'calculadoraDatosCCF.php';
 
 $principal = 4000;
 $tasaAnual = 19.00;
