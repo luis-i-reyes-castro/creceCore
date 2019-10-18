@@ -1,24 +1,5 @@
 <?php
 
-function calcularCostoEvaluacion( $principal)
-{
-    require "constantes.php";
-    $costoEvaluacion = 0.;
-    if ( $principal <= $montoEvaluacion12 )
-    {
-        $costoEvaluacion += round( $principal * $constCostoEvaluacion1, 2);
-    }
-    elseif ( $principal <= $montoEvaluacion23 )
-    {
-        $costoEvaluacion += $constCostoEvaluacion2;
-    }
-    else
-    {
-        $costoEvaluacion += round( $principal * $constCostoEvaluacion3, 2);
-    }
-    return $costoEvaluacion;
-}
-
 function calcularValorPresente( $flujosDeEfectivo, $tasaMensual)
 {
     $valor = 0.00;
@@ -29,21 +10,23 @@ function calcularValorPresente( $flujosDeEfectivo, $tasaMensual)
     return $valor;
 }
 
-function calcularDatosCredito( $principal, $tasaAnual, $plazoMeses)
+function calcularDatosCCF( $principal, $tasaAnual, $plazoMeses)
 {
+    require_once "recargos.php";
+    require_once "impuestos.php";
+
     $principal  = round( $principal, 2);
     $tasaAnual  = round( $tasaAnual, 2);
     $plazoMeses = intval($plazoMeses);
-    require "constantes.php";
 
     // Calcula el costo de evaluacion (lo paga el solicitante)
-    $costoEvaluacion    = calcularCostoEvaluacion($principal);
+    $costoEvaluacion    = recargoEvaluacion( $principal, 'CCF');
     $costoEvaluacionIVA = round( $costoEvaluacion * $tasaIVA, 2);
     $costoEvaluacionTotal = $costoEvaluacion + $costoEvaluacionIVA;
     $principalEfectivo    = $principal - $costoEvaluacionTotal;
 
     // Calcula el costo de adjudicacion (lo paga el inversionista)
-    $costoAdjudicacion     = round( $principal * $tasaAdjudicacion, 2);
+    $costoAdjudicacion     = recargoAdjudicacion( $principal, 'CCF');
     $costoAdjudicacionIVA  = round( $costoAdjudicacion * $tasaIVA, 2);
     $costoAdjudicacionTotal = $costoAdjudicacion + $costoAdjudicacionIVA;
     $totalInversion         = $principal + $costoAdjudicacionTotal;
@@ -62,6 +45,7 @@ function calcularDatosCredito( $principal, $tasaAnual, $plazoMeses)
     $intereses = array(0.);
     $capitales = array(0.);
     $insolutos = array($principal);
+    $tasaComision   = tasaComision('CCF');
     $comisiones     = array(0.);
     $comisiones_iva = array(0.);
     $ganancias      = array(0.);
@@ -101,7 +85,7 @@ function calcularDatosCredito( $principal, $tasaAnual, $plazoMeses)
     // usando la tasa mensual nominal como acota superior
     $t_min = 0.;
     $t_max = $tasaMensual;
-    while ( $t_max - $t_min > $precisionMetodoBiseccion )
+    while ( $t_max - $t_min > 1E-6 )
     {
         $t_med = ( $t_max + $t_min ) / 2.;
         $valor_presente = calcularValorPresente( $ganancias, $t_med);

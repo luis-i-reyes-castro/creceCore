@@ -6,7 +6,7 @@ $principal = 4000;
 $tasaAnual = 19.00;
 $plazo     = 12;
 
-$datos = calcularDatosCredito( $principal, $tasaAnual, $plazo);
+$datos = calcularDatosCCF( $principal, $tasaAnual, $plazo);
 $principal              = $datos['str_Principal'];
 $tasaAnual              = $datos['str_TasaAnual'];
 $plazoMeses             = $datos['str_PlazoMeses'];
