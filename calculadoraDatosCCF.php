@@ -167,12 +167,13 @@ function calcularDatosCCF( $principal, $tasaAnual, $plazoMeses)
     
     // Almacena las tablas de pagos como variables tipo grid
     // (ver: https://wiki.processmaker.com/3.1/Grid_Control#PHP_in_Grids)
-    $tablaSolicitantes   = array();
-    $tablaInversionistas = array();
-    $tablaCrece          = array();
+    $tablaSolicitantes = array();
+    $tablaCrece        = array();
+    $tablaSinFormato   = array();
     for( $k = 1; $k <= $plazoMeses; $k++)
     {
         $indice    = strval($k);
+        $indice2D  = sprintf( '%02d', $k);
         $pago_     = $pagos[$k];
         $interes_  = $intereses[$k];
         $capital_  = $capitales[$k];
@@ -187,13 +188,6 @@ function calcularDatosCCF( $principal, $tasaAnual, $plazoMeses)
                'CAPITAL'  => '$' . number_format( $capital_, 2),
                'INSOLUTO' => '$' . number_format( $insoluto_, 2) );
 
-        $tablaInversionistas[$indice] =
-        array( 'PAGO'     => '$' . number_format( $pago_, 2),
-               'INSOLUTO' => '$' . number_format( $insoluto_, 2),
-               'COMISION'     => '$' . number_format( $comision_, 2),
-               'COMISION_IVA' => '$' . number_format( $comision_iva_, 2),
-               'GANANCIA'     => '$' . number_format( $ganancia_, 2) );
-
         $tablaCrece[$indice] =
         array( 'PAGO'     => '$' . number_format( $pago_, 2),
                'INTERES'  => '$' . number_format( $interes_, 2),
@@ -203,11 +197,21 @@ function calcularDatosCCF( $principal, $tasaAnual, $plazoMeses)
                'COMISION_IVA' => '$' . number_format( $comision_iva_, 2),
                'GANANCIA'     => '$' . number_format( $ganancia_, 2) );
 
+        $tablaSinFormato[$indice] =
+        array( 'INDICE'   => $indice2D,
+               'PAGO'     => $pago_,
+               'INTERES'  => $interes_,
+               'CAPITAL'  => $capital_,
+               'INSOLUTO' => $insoluto_,
+               'COMISION'     => $comision_,
+               'COMISION_IVA' => $comision_iva_,
+               'GANANCIA'     => $ganancia_ );
+
     }
 
-    $datosCredito['TablaSolicitantes']   = $tablaSolicitantes;
-    $datosCredito['TablaInversionistas'] = $tablaInversionistas;
-    $datosCredito['TablaCrece']          = $tablaCrece;
+    $datosCredito['TablaSolicitantes'] = $tablaSolicitantes;
+    $datosCredito['TablaCrece']        = $tablaCrece;
+    $datosCredito['TablaSinFormato']   = $tablaSinFormato;
 
     return $datosCredito;
 
