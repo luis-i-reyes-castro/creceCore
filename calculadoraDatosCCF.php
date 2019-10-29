@@ -120,11 +120,11 @@ function calcularDatosCCF( $principal, $tasaAnual, $plazoMeses)
     $datosCredito['PlazoMeses']             = $plazoMeses;
     $datosCredito['CostoEvaluacion']        = $costoEvaluacion;
     $datosCredito['CostoEvaluacionIVA']     = $costoEvaluacionIVA;
-    $datosCredito['costoEvaluacionTotal']   = $costoEvaluacionTotal;
+    $datosCredito['CostoEvaluacionTotal']   = $costoEvaluacionTotal;
     $datosCredito['PrincipalEfectivo']      = $principalEfectivo;
     $datosCredito['CostoAdjudicacion']      = $costoAdjudicacion;
     $datosCredito['CostoAdjudicacionIVA']   = $costoAdjudicacionIVA;
-    $datosCredito['costoAdjudicacionTotal'] = $costoAdjudicacionTotal;
+    $datosCredito['CostoAdjudicacionTotal'] = $costoAdjudicacionTotal;
     $datosCredito['TotalInversion']         = $totalInversion;
     $datosCredito['Cuota']                  = $cuota;
     $datosCredito['TotalPagos']             = $totalPagos;
