@@ -106,12 +106,12 @@ function calcularDatosCCF( $principal, $tasaAnual, $plazoMeses)
     $tasaInternaRetorno = round( ( ( ( 1. + $t_med ) ** 12 ) - 1. ) * 100., 2);
 
     // Calcula las utilidades e IVAs de la operacion
-    $operacionUtilidad = $costoEvaluacion
-                       + $costoAdjudicacion
-                       + $totalComisiones;
-    $operacionIVA      = $costoEvaluacionIVA
-                       + $costoAdjudicacionIVA
-                       + $totalComisionesIVA;
+    $operacionUtilidad = round( $costoEvaluacion
+                              + $costoAdjudicacion
+                              + $totalComisiones, 2);
+    $operacionIVA      = round( $costoEvaluacionIVA
+                              + $costoAdjudicacionIVA
+                              + $totalComisionesIVA, 2);
 
     // Almacena todos los datos en una sola variable tipo arreglo
     $datosCredito = array();
