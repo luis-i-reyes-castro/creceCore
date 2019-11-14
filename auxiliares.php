@@ -1,21 +1,25 @@
 <?php
 
-function redondearParaAbajo( $monto)
+function redondearParaAbajo( $valor, $decimales = 2)
 {
     
-    return round( 0.01 * floor( 100. * $monto ) ,2);
+    $t1 = 10. ** $decimales;
+    $t2 = 0.1 ** $decimales;
+    return round( floor( $t1 * $valor ) * $t2, $decimales);
 }
 
-function redondearParaArriba( $monto)
+function redondearParaArriba( $valor, $decimales = 2)
 {
     
-    return round( 0.01 * ceil( 100. * $monto ) ,2);
+    $t1 = 10. ** $decimales;
+    $t2 = 0.1 ** $decimales;
+    return round( ceil( $t1 * $valor ) * $t2, $decimales);
 }
 
-// $original          = 1.00 / 3;
-// $redondeado        = round( $original, 2);
-// $redondeado_abajo  = redondearParaAbajo($original);
-// $redondeado_arriba = redondearParaArriba( $original);
+// $original          = 2.00 / 3;
+// $redondeado        = round( $original, 4);
+// $redondeado_abajo  = redondearParaAbajo( $original, 4);
+// $redondeado_arriba = redondearParaArriba( $original, 4);
 
 // echo "original:          $original\n";
 // echo "redondeado:        $redondeado\n";
